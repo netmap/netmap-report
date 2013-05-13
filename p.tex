@@ -1,0 +1,278 @@
+\documentclass[pdftex,letterpaper,twocolumn,10pt]{sig-alternate-10pt}
+%\documentclass[pdftex,letterpaper]{sig-alternate}
+
+\newcommand{\subparagraph}{}
+%\documentclass[pdftex,letterpaper]{article}
+\newcommand{\AUTHORS}{Victor Costan, Tiffany Yu-Han Chen, Ravi Netravali}
+%\newcommand{\TITLE}{Super-Rational Congestion Control}
+\newcommand{\TITLE}{\name{}}
+\newcommand{\KEYWORDS}{}
+\newcommand{\CONFERENCE}{}
+\newcommand{\PAGENUMBERS}{yes}       % "yes" or "no"
+%\newcommand{\TOAPPEAR}{no}
+%\newcommand{\comment}[1]{}
+\usepackage{ifthen}
+\usepackage{endnotes}
+
+\ifthenelse{\equal{\PAGENUMBERS}{yes}}{%
+\usepackage[nohead,
+            left=4.5pc,right=4.5pc,top=4.5pc,
+            footskip=0.5in,bottom=6pc,
+            columnsep=2pc
+            ]{geometry}
+}{
+\usepackage[noheadfoot,
+            left=4.5pc,right=4.5pc,top=4.5pc,
+            footskip=0.5in,bottom=6pc,
+            columnsep=2pc
+	    ]{geometry}
+}
+
+\usepackage{fancyhdr}
+%\usepackage[numbers]{natbib}
+\usepackage{booktabs}
+\renewcommand{\toprule}{}
+\renewcommand{\bottomrule}{}
+\usepackage[compact]{titlesec}
+
+\usepackage{color}
+\usepackage{mathptmx}   % Times + Times-like math symbols
+\usepackage{courier}
+\usepackage[scaled=0.92]{helvet}
+\usepackage{xspace}
+
+\usepackage{color}
+\usepackage{colortbl}
+\usepackage{graphicx} 
+\usepackage{import}
+\usepackage{amsmath} 
+\usepackage{amssymb} 
+\usepackage{algorithm}
+\usepackage{url}
+\usepackage{ifthen}
+\usepackage{color}
+%\usepackage{endnotes}
+%\usepackage{graphicx}
+\usepackage{listings}
+
+%\usepackage{clrscode}
+%\usepackage[noeka]{mathrmletter}
+\usepackage[loose]{subfigure}
+%\usepackage{caption}
+%\usepackage{subcaption}
+\usepackage{multirow}
+\usepackage[noend]{algorithmic}
+\usepackage{html, makeidx}
+ 
+%\usepackage{thumbpdf}
+%%\ifthenelse{\isundefined{\wantBW}}{%
+%%  \usepackage[colorlinks]{hyperref}%        % for online version
+%%}{%
+  \usepackage[pdfborder={0 0 0}]{hyperref}% % for paper (B&W) version
+%%}
+\newcommand{\URL}[1]{\url{#1}}
+
+\interfootnotelinepenalty=10000  % Split footnote are annoying
+
+
+%%%%% Setup for PDF
+% \hypersetup{%
+% pdfauthor = {\AUTHORS},
+% pdftitle = {\TITLE},
+% pdfsubject = {\CONFERENCE},
+% pdfkeywords = {\KEYWORDS},
+% bookmarksopen = {true}
+% }
+
+%\setlength{\parindent}{0pt}
+%\setlength{\parskip}{\baselineskip}
+\renewcommand{\headrulewidth}{0pt}
+
+\ifthenelse{\equal{\PAGENUMBERS}{yes}}{%
+  \pagestyle{plain}
+}{%
+  \pagestyle{empty}
+}
+
+%\usepackage[font=bf]{caption}
+\usepackage{comment}
+
+% following two lines were remarked in hotnets version
+% \clubpenalty=1000  % Don't allow orphans
+% \widowpenalty=1000 % Don't allow widows
+
+%\newcommand{\affaddr}{\fontsize{12}{14}\selectfont}
+%\newfont{\ttlfnt}{phvb8t at 18pt}
+%\newfont{\aufnt}{phvr8t at 12pt}
+%\newfont{\affaddr}{phvr8t at 10pt}
+%\newfont{\bibfnt}{ptmr8t at 10pt}
+%\title{\ttlfnt\TITLE}
+%{\affaddr Massachusetts Institute of Technology}}
+\date{}
+
+%%%%%%%%%%%% Macros by me %%%%%%%%%%%%%%%
+\newcommand{\ea}{et al.}
+\newcommand{\ie}{i.e.}
+\newcommand{\eg}{e.g.}
+
+\newcommand{\name}{Netmap}
+
+\newcommand{\ith}{$i^\text{th}$}
+\newcommand{\tth}{$t^\text{th}$}
+\newcommand{\lth}{$\ell^\text{th}$}
+\newcommand{\gth}{$g^\text{th}$}
+
+\newcommand{\para}[1]{\medskip\noindent{\bf #1}}
+
+% peanut gallery comments; from Mike Walfish
+%
+%
+% NOTE: Comment out the line below if you want a draft with no red comments.
+% NOTE: Commenting out this line may replace some of the red comments with 
+%       extra spaces or newlines.
+\def\noeditingmarks{}
+%
+\newcommand{\textred}[1]{\textcolor{red}{#1}}
+\ifx\noeditingmarks\undefined
+   \newcommand{\pgwrapper}[2]{\textred{#1: #2}}
+\else
+   \newcommand{\pgwrapper}[2]{}
+\fi
+\newcommand{\hb}[1]{\pgwrapper{HB}{#1}}
+\newcommand{\as}[1]{\pgwrapper{YC}{#1}}
+\newcommand{\yc}[1]{\pgwrapper{AS}{#1}}
+\newcommand{\ls}[1]{\pgwrapper{LS}{#1}}
+% end peanut gallery comments
+
+%margins
+\setlength{\columnsep}{.33in}
+\setlength{\textheight}{9.25in}
+\setlength{\textwidth}{7in}
+
+%\usepackage{microtype}
+
+\usepackage{textcomp}
+
+\newcommand{\Prob}{{\mathbb P}}
+
+%% ACM Copyright Block
+%
+%% \usepackage{float}
+%% \floatstyle{plain}
+%% \newfloat{acmcr}{b}{acmcr}
+%% \newcommand{\acmcopyright}{%
+%% \begin{acmcr}
+%% \parbox[b]{\columnwidth}{%
+%% \vspace{0.2in}
+%% \small
+%% Permission to make digital or hard copies of all or part of this work
+%% for personal or classroom use is granted without fee provided that
+%% copies are not made or distributed for profit or commercial advantage
+%% and that copies bear this notice and the full citation on the first
+%% page.  To copy otherwise, to republish, to post on servers or to
+%% redistribute to lists, requires prior specific permission and/or a fee.
+
+%% \emph{SIGCOMM'09}, August XX--XX, 2009, ...............\\
+%% Copyright 2009 ACM 978-1-60558-175-0/08/08 \dots \$5.00.}
+%% \end{acmcr}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%  START DOCUMENT  %%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\makeatletter
+
+\global\def\section{\@startsection {section}{1}{\z@}%
+                                   {-1.5ex \@plus -0.8ex \@minus -.1ex}%
+                                   {0.6ex \@plus.2ex}% changed this
+                                   {\normalfont\bfseries\scshape\fontsize{11}{13}\selectfont}}
+\global\def\subsection{\@startsection{subsection}{2}{\z@}%
+                                     {-1.25ex\@plus -0.8ex \@minus -.1ex}%
+                                     {0.3ex \@plus .1ex}% changed this
+                                     {\normalfont\bfseries\fontsize{10}{12}\selectfont}}
+\global\def\subsubsection{\@startsection{subsubsection}{3}{\z@}%
+                                     {-1ex\@plus -1ex \@minus -.1ex}%
+                                     {0.1ex \@plus .1ex}% changed this
+                                     {\normalfont\itshape\fontsize{10}{12}\selectfont}}
+
+% following were commented out for hotnets version:
+%\global\def\@maketitle{%
+%  \newpage
+%  \null
+%  \vskip -0.31in%
+%  \null
+%  \begin{center}%
+%  \let \footnote \thanks
+%    {\LARGE \@title \par}%
+%    \vskip 0.75em%
+%    {\large
+%      \lineskip .5em%
+%      \begin{tabular}[t]{c}%
+%        \@author
+%      \end{tabular}\par}%
+%    \vskip 1em%
+%    {\large \@date}%
+%  \end{center}%
+%  \par
+%  \vskip 0.5em}
+
+%\def\newblock{\hskip .11em plus .33em minus .07em}
+
+\clubpenalty=10000 
+\widowpenalty = 10000
+
+\begin{document}
+\conferenceinfo{SIGCOMM'12,} {August 13--17, 2012, Helsinki,
+Finland.} 
+\CopyrightYear{2012} 
+\crdata{978-1-4503-1419-0/12/08} 
+\clubpenalty=10000 
+\widowpenalty = 10000
+
+%\conferenceinfo{SIGCOMM'11,} {... 2011, Toronto, Canada}
+%\CopyrightYear{2011}
+%\crdata{978-1-60558-594-9/09/08} 
+
+ % \setlength{\paperwidth}{8.5truein}
+ % \setlength{\paperheight}{11.0truein}
+ % \setlength{\pdfpagewidth}{\paperwidth}
+ % \setlength{\pdfpageheight}{\paperheight}
+
+\title{\TITLE}
+%\author{\AUTHORS}
+%\if 0
+%\numberofauthors{3}
+\author{\alignauthor Victor Costan, Tiffany Yu-Han Chen, Ravi Netravali\\
+\affaddr{Computer Science and Artificial Intelligence Laboratory}\\
+\affaddr{Massachusetts Institute of Technology, Cambridge, Mass., USA} \\
+\email{\{costan,yuhan,ravinet\}@mit.edu}\\}
+%(January 27, 2013: In double-blind submission for review)}
+%\fi
+%\date{January 27, 2012 (In double-blind submission for review)}
+
+\maketitle
+
+\begin{sloppypar}
+
+\begin{abstract}
+\input{abstract}
+\end{abstract}
+
+\ifthenelse{\isundefined{\onlyAbstract}}{%
+
+\input{intro}
+\input{related}
+\input{overview}
+
+%\begin{flushleft}
+%\setlength{\bibsep}{1pt}
+%\bibsep=1pt
+\begin{small}
+\bibliographystyle{abbrv}
+\bibliography{ref-hacked}
+%\bibliography{ref,rfc}
+\end{small}
+%\end{flushleft}
+}
+
+\end{sloppypar}
+
+\end{document}

@@ -1,0 +1,47 @@
+This is BibTeX, Version 0.99c (TeX Live 2009/Debian)
+The top-level auxiliary file: p.aux
+The style file: abbrv.bst
+Database file #1: ref-hacked.bib
+Warning--to sort, need author or key in NDT
+You've used 4 entries,
+            2118 wiz_defined-function locations,
+            605 strings with 5984 characters,
+and the built_in function-call counts, 1641 in all, are:
+= -- 160
+> -- 85
+< -- 2
++ -- 35
+- -- 30
+* -- 114
+:= -- 255
+add.period$ -- 13
+call.type$ -- 4
+change.case$ -- 27
+chr.to.int$ -- 0
+cite$ -- 5
+duplicate$ -- 65
+empty$ -- 128
+format.name$ -- 30
+if$ -- 359
+int.to.chr$ -- 0
+int.to.str$ -- 4
+missing$ -- 3
+newline$ -- 22
+num.names$ -- 6
+pop$ -- 36
+preamble$ -- 1
+purify$ -- 23
+quote$ -- 0
+skip$ -- 50
+stack$ -- 0
+substring$ -- 80
+swap$ -- 21
+text.length$ -- 2
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 16
+warning$ -- 1
+while$ -- 12
+width$ -- 5
+write$ -- 47
+(There was 1 warning)
