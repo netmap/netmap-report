@@ -1,3 +1,4 @@
+# Latex temporary files.
 *.aux
 *.glo
 *.idx
@@ -21,3 +22,9 @@
 *.mtc1
 *.out
 *.synctex.gz
+
+# Vim.
+*.sw*
+
+# OSX.
+.DS_Store
