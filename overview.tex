@@ -1,4 +1,32 @@
 \section{Design Overview}
 \label{s:overview}
 
+\subsection{Measurements}
+We measure more than 200 types of network data, including device-specific data such as device model and location (GPS), network performance data including latency, bandwidth, and average round-trip-time, neighboring network infrastructure information such as neighboring network type and signal strength to neighboring towers/access points, and the DHCP information. All the measurements are stored in json, so that we can easily parse and do analysis on the data afterwards.
+
+
+{\bfseries Device-Specific Information.} We collect device-specific information including the device ID 
+(IMEI or ESN), the device type (GSM or CDMA), and the software version, etc. With the device ID, we can 
+uniquely identify a device, track the device, and discard bad data that comes due to cheating. We can 
+even provide personalized detailed network using habit or network performance feedback data to the user. 
+The software version allows us to infer the effect of the software on the network performance. We also 
+log information about the SIM card, such as the phone number, the SIM card operator (AT\&T, T-Mobile, etc.),
+the 
+
+{\bfseries Neighboring Network Infrastructure Information.} \name{} collects information about
+neighboring WiFi APs and cell towers. 
+
+ 
+
+{\bfseries Network Performance.} We collect sophisticated network performance measurements between the device
+and servers, such as the network latency, bandwidth, average round-trip-time, and some TCP variables. These
+measurements are crucial for both network researchers and device users. For researchers, 
+
+
+For the network performance data, we use the Network Diagnostic Tool (NDT), which measures various network 
+performance metrics between the mobile device and their distributed servers. There are some straightforward 
+and incredibly tedious problems in measuring the network performance. First, one needs to consider the time 
+synchronization problem between the device and the server; second, to eliminate the noise in the measurement, 
+one needs to maintain servers in multiple places. NDT solves the time synchronization problem, and it maintains 9 servers in the US.
+
 
