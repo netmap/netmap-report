@@ -1,0 +1,79 @@
+\subsection{The Network Performance Measurement Library}
+\label{ss:measurements}
+We measure more than 200 types of network data, including device-specific data such as device model, 
+location data, network performance data including latency, bandwidth, and average round-trip-time, 
+neighboring network infrastructure information such as neighboring network type and signal strength to 
+neighboring towers/access points, and the DHCP information. All the data is stored in JSON format, so
+that researchers can easily parse it.
+
+
+{\bfseries Device-Specific Information.} \name{} collects device-specific information including the device ID 
+(IMEI or ESN), the device type (GSM or CDMA), the software version. With the device ID, we can 
+identify a device, track the device, and discard bad data that comes due to cheating. We can 
+even provide personalized network usage diaries which allow users to better understand their network 
+using habits.
+Collecting OS version allows us to infer the effect of system and harware on the network performance. \name{} also 
+logs SIM card information, such as the phone number, the SIM card operator (AT\&T, T-Mobile, etc.),
+the radio type (EDGE, GPRS, HSDPA, etc.).
+This permits us to create the map of network quality for each phone carrier or type, and to track how the network quality 
+evolves over time.
+
+{\bfseries Location.} The system gathers the user's location information from the GPS or network location provider. 
+For the GPS, in addition to the latitude and longitude, our system also collects information 
+about the observed satellites, including the almanac, ephemeris, azimuth, elevation, and SNR.
+We plan to use the stallites information to detect users that cheat the game by faking their GPS locations.
+Because GPS is unavailable indoors, we also use the network location provider's locations.
+%gather location estimation from the network provider
+%and verify its eligibility with the cell tower/AP information we collect.
+
+
+{\bfseries Network Infrastructure Information.} \name{} collects information about
+neighboring WiFi APs and cell towers. The cell tower information includes the mobile country code (MCC), 
+mobile network code (MNC), location area code (LAC), and the signal strength; the WiFi AP information
+includes the MAC address, SSID, IP address, frequency band, RSSI, link speed, etc.
+With the locations where users observed the cell tower/AP, we can approximate the location of 
+each cell tower/AP. Many research projects~\cite{ctrack, vtrack-sensys09} have focused on using 
+energy efficient sensors to provide accurate position estimation, but most of them suffer from scalability
+problem due to lack of cell tower/AP observations. We belive we can greatly assist those projects
+with the crowd-sourced data that we have. However, neighboring GSM cell tower information isn't 
+universally available across all phones. Some phone models limit the cell information to only 
+the connected tower or do not make it available at all.
+
+\name{} also collects the DHCP information, including the assigned IP, network mask, IP of the DHCP server, etc.
+DHCP information is useful for inferring the network topology, and for cheating detection.
+ 
+ 
+{\bfseries Network Performance.} We collect sophisticated network performance measurements 
+such as the network latency, bandwidth, average round-trip-time, and some TCP variables. 
+For researchers, they can use the information for research on improving network reliability and performance or
+ making tradeoffs when designing systems. 
+For normal users, these measurements help them choose the network carrier and device which provide
+ the best reception in their neighborhood. 
+
+We use the Network Diagnostic Tool (NDT)~\cite{NDT} to collect network information. NDT measures various network 
+performance metrics between the mobile device and their distributed servers. There are some straightforward 
+and incredibly tedious problems in measuring the network performance. First, in order to get individual latency
+measurements for both the uplink and downlink, one needs to consider the time 
+synchronization problem between the device and the server. Second, to eliminate the noise in the measurement, 
+one needs to maintain servers in multiple places. 
+NDT solves the time synchronization problem, and it maintains 81 servers in 27 coutries. This allows \name{}
+to provide accuracy network performance measurements across the world.
+
+\subsection{Battery/Network Awareness}
+\label{ss:awareness}
+There are two important aspects that designers need to take into account when implementing a mobile 
+programming API. First, the API should be energy-efficient. 
+Games using the API should avoid caonsuming the users ; second, the API should
+not drain the user's data plan or make the user pay extra money. 
+ 
+\name{} addresses these two problems by incorporating the concept of battery and network aware. 
+To be battery aware, \name{} monitors the battery level and status. Games using the API would get
+notified when the phone is charging or when the battery level is low, and take certain actions
+to save energy. For example, if the phone is charging, the game can start uploading the measurements 
+it collected to the server or taking measurements more frequently. 
+
+\name{} is also network aware. \name{} monitors the network type that the device is currently using, 
+and notifies the games that using the API if the user switches to either WiFi or cellular network.
+Games can react to the notification by uploading all the collected measurements to the server when
+the phone is using WiFi.
+
