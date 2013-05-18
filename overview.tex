@@ -14,10 +14,10 @@ that researchers can easily parse it.
 identify a device, track the device, and discard bad data that comes due to cheating. We can 
 even provide personalized network usage diaries which allow users to better understand their network 
 using habits.
-The OS version allows us to infer the effect of software on the network performance. \name{} also 
+Collecting OS version allows us to infer the effect of system and harware on the network performance. \name{} also 
 logs SIM card information, such as the phone number, the SIM card operator (AT\&T, T-Mobile, etc.),
 the radio type (EDGE, GPRS, HSDPA, etc.).
-This permits us to create the map of network quality for each phone carrier or type, and how the network quality 
+This permits us to create the map of network quality for each phone carrier or type, and to track how the network quality 
 evolves over time.
 
 {\bfseries Location.} The system gathers the user's location information from the GPS or network location provider. 
@@ -45,17 +45,18 @@ the connected tower or do not make it available at all.
 DHCP information is useful for inferring the network topology, and for cheating detection.
  
  
-{\bfseries Network Performance.} We collect sophisticated network performance measurements between the device
-and servers, such as the network latency, bandwidth, average round-trip-time, and some TCP variables. These
-measurements are crucial for both network researchers and normal users. For researchers, they can use the 
-information for research on improving network reliability and performance, as it will provide data on data 
-transport latency and throughput for cellular and WiFi networks. For normal users, these measurements help them
-choose the network carrier which provides the best reception in their neighborhood. 
+{\bfseries Network Performance.} We collect sophisticated network performance measurements 
+such as the network latency, bandwidth, average round-trip-time, and some TCP variables. 
+For researchers, they can use the information for research on improving network reliability and performance or
+ making tradeoffs when designing systems. 
+For normal users, these measurements help them choose the network carrier and device which provide
+ the best reception in their neighborhood. 
 
-We use the Network Diagnostic Tool (NDT)~\cite{NDT} to collect network quality information. NDT measures various network 
+We use the Network Diagnostic Tool (NDT)~\cite{NDT} to collect network information. NDT measures various network 
 performance metrics between the mobile device and their distributed servers. There are some straightforward 
-and incredibly tedious problems in measuring the network performance. First, one needs to consider the time 
-synchronization problem between the device and the server; second, to eliminate the noise in the measurement, 
+and incredibly tedious problems in measuring the network performance. First, in order to get individual latency
+measurements for both the uplink and downlink, one needs to consider the time 
+synchronization problem between the device and the server. Second, to eliminate the noise in the measurement, 
 one needs to maintain servers in multiple places. 
 NDT solves the time synchronization problem, and it maintains 81 servers in 27 coutries. This allows \name{}
 to provide accuracy network performance measurements across the world.
@@ -63,7 +64,7 @@ to provide accuracy network performance measurements across the world.
 \subsection{Battery/Network Awareness}
 There are two important aspects that designers need to take into account when implementing a mobile 
 programming API. First, the API should be energy-efficient. 
-Games using the API should not drain the battery of the phone quickly; second, the API should
+Games using the API should avoid caonsuming the users ; second, the API should
 not drain the user's data plan or make the user pay extra money. 
  
 \name{} addresses these two problems by incorporating the concept of battery and network aware. 

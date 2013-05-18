@@ -25,4 +25,16 @@ M.~A. S\'anchez, J.~S. Otto, Z.~S. Bischof, D.~R. Choffnes, F.~E. Bustamante,
 \newblock Dasu: Pushing experiments to the {Internet's} edge.
 \newblock In {\em Proc. of USENIX NSDI}, April 2013.
 
+\bibitem{vtrack-sensys09}
+A.~Thiagarajan, L.~Ravindranath, K.~LaCurts, S.~Madden, H.~Balakrishnan,
+  S.~Toledo, and J.~Eriksson.
+\newblock {VTrack: Accurate, Energy-Aware Road Traffic Delay Estimation Using
+  Mobile Phones}.
+\newblock SenSys '09.
+
+\bibitem{ctrack}
+A.~Thiagarajan, L.~S. Ravindranath, H.~Balakrishnan, S.~Madden, and L.~Girod.
+\newblock {Accurate, Low-Energy Trajectory Mapping for Mobile Devices}.
+\newblock NSDI '11.
+
 \end{thebibliography}
