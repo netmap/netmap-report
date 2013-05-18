@@ -33,8 +33,8 @@ mobile network code (MNC), location area code (LAC), and the signal strength; th
 includes the MAC address, SSID, IP address, frequency band, RSSI, link speed, etc.
 With the locations where users observed the cell tower/AP, we can approximate the location of 
 each cell tower/AP. Many research projects~\cite{ctrack, vtrack-sensys09} have focused on using 
-energy efficient sensors to provide accurate position estimation, but most of them suffer from scalability
-problem due to lack of cell tower/AP observations. We belive we can greatly assist those projects
+energy efficient sensors to provide accurate position estimation, but most of them suffer from
+low coverage problem due to lack of cell tower/AP observations. We belive we can greatly assist those projects
 with the crowd-sourced data that we have. However, neighboring GSM cell tower information isn't 
 universally available across all phones. Some phone models limit the cell information to only 
 the connected tower or do not make it available at all.
@@ -54,7 +54,7 @@ We use the Network Diagnostic Tool (NDT)~\cite{NDT} to collect network informati
 performance metrics between the mobile device and their distributed servers. There are some straightforward 
 and incredibly tedious problems in measuring the network performance. First, in order to get individual latency
 measurements for both the uplink and downlink, one needs to consider the time 
-synchronization problem between the device and the server. Second, to eliminate the noise in the measurement, 
+synchronization problem between the device and the server. Second, to avoid variability introduced by the Internet, 
 one needs to maintain servers in multiple places. 
 NDT solves the time synchronization problem, and it maintains 81 servers in 27 coutries. This allows \name{}
 to provide accuracy network performance measurements across the world.
@@ -62,9 +62,8 @@ to provide accuracy network performance measurements across the world.
 \subsection{Battery/Network Awareness}
 \label{ss:awareness}
 There are two important aspects that designers need to take into account when implementing a mobile 
-programming API. First, the API should be energy-efficient. 
-Games using the API should avoid caonsuming the users ; second, the API should
-not drain the user's data plan or make the user pay extra money. 
+programming API. First, the API should lend itself to energy-efficient applications. 
+Games using the API should avoid causing the users to incur data usage charges. 
  
 \name{} addresses these two problems by incorporating the concept of battery and network aware. 
 To be battery aware, \name{} monitors the battery level and status. Games using the API would get
