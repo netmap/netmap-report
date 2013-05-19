@@ -1,38 +1,38 @@
 \subsection{Algorithm}
 \label{ss:algorithm}
-From the large amount of data we collect, we can infer several characteristics of
-wireless networks and their infrastructures. One such characteristic is the location
-of cell towers that users either connect to or are in the vicinity of, since we collect
-neighboring cell tower information. We tried two different algorithms for cell tower
-positioning which are described below. Each algorithm uses multiple readings to
+From the large amount of data we collect, we can infer several characteristics of 
+wireless networks and their infrastructures. One such characteristic is the location 
+of cell towers that users either connect to or are in the vicinity of, since we collect 
+neighboring cell tower information. We tried two different algorithms for cell tower 
+positioning which are described below. Each algorithm uses multiple readings to 
 position a given cell tower. For each algorithm, we use the following abbreviations:
-Location of reading = L^MLocation of cell tower = T^MDistance = L - T = d^MSignal strength = s
-^M
+Location of reading = LLocation of cell tower = TDistance = L - T = dSignal strength = s
+
 {\bfseries Algorithm 1- Channel Model Estimation}
-We begin with the common model for wireless network channels: s \propto \frac{k}{d^2}
-where k is the channel condition parameter. However, we don√ït know the channel
-condition parameter and it is difficult to accurately estimate. We do know that readings
-in similar locations should have similar channel condition parameters so we disregard
+We begin with the common model for wireless network channels: s \propto \frac{k}{d^2} 
+where k is the channel condition parameter. However, we don’t know the channel 
+condition parameter and it is difficult to accurately estimate. We do know that readings 
+in similar locations should have similar channel condition parameters so we disregard 
 k (since it is roughly constant across readings in same location at similar time) and state:
 
 s \propto \frac{k}{d^2} \rightarrow d^2 = \frac{1}{s} \rightarrow d = \sqrt{\frac{1}{s}} \rightarrow L - T = \sqrt{\frac{1}{s}} \rightarrow T = L - \sqrt{\frac{1}{s}}
 
-To obtain cell tower location, we solve for T in each reading and use the location which solves
-min(sd^2 √ê 1), which is derived from minimizing d^2 = \frac{1}{s} (so sd^2 √ê 1 \approx 0)
+To obtain cell tower location, we solve for T in each reading and use the location which solves 
+min(sd^2 – 1), which is derived from minimizing d^2 = \frac{1}{s} (so sd^2 – 1 \approx 0)
 
 
 {\bfseries Algorithm 2- Weighted Average of User Locations}
-We assume that users that connect or detect a cell tower with reasonable signal strength
-are relatively close to the tower. Since all user locations, after eliminating outliers, will be
-a small distance from the cell tower, and each will have a different orientation with respect
-to the cell tower, we weight each reading by signal strength and sum the locations to obtain
-an estimate of the cell tower location.
+We assume that users that connect or detect a cell tower with reasonable signal strength 
+are relatively close to the tower. Since all user locations, after eliminating outliers, will be 
+a small distance from the cell tower, and each will have a different orientation with respect 
+to the cell tower, we weight each reading by signal strength and sum the locations to obtain 
+an estimate of the cell tower location. 
 
-We first, for all entries, eliminate those with signal strength below a threshold. This eliminates
-the use of outliers since very low signal strength implies that the user is not very close to the
-cell tower being considered. We then weight each reading√ïs location (longitude and latitude separately) by:
+We first, for all entries, eliminate those with signal strength below a threshold. This eliminates 
+the use of outliers since very low signal strength implies that the user is not very close to the 
+cell tower being considered. We then weight each reading’s location (longitude and latitude separately) by:
 \frac{signal strength of current reading}{sum of signal strengths from all readings above threshold}
-Finally, we add the weighted longitudes and the weighted latitudes to obtain an estimate on the location
-of the cell tower. The accuracy of this algorithm grows as more readings are used.
+Finally, we add the weighted longitudes and the weighted latitudes to obtain an estimate on the location 
+of the cell tower. The accuracy of this algorithm grows as more readings are used. 
 
 
