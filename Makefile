@@ -16,7 +16,8 @@ pdf/:
 
 pdf/$(REPORT).pdf: $(SRCS) $(REFS) tmp/ pdf/
 	cd src && $(LATEX) -interaction=nonstopmode -output-directory=../tmp $(REPORT)
-	cd tmp && $(BIBTEX) tmp/$(REPORT).aux
+	cp $(REFS) tmp
+	cd tmp && $(BIBTEX) $(REPORT).aux
 	cd src && $(LATEX) -interaction=nonstopmode -output-directory=../tmp $(REPORT)
 	cd src && $(LATEX) -interaction=nonstopmode -output-directory=../tmp $(REPORT)
 	mv tmp/p.pdf pdf/
