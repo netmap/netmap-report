@@ -1,4 +1,4 @@
-\subsection{Measurement Library Design}
+\subsection{The Measurement Library}
 \label{ss:dataflow}
 
 NetMap uses a dedicated server for collecting and storing the performance
@@ -36,8 +36,63 @@ the data queued up in SQLite is uploaded to the measurement server.
   \label{fig:dataflow}
 \end{figure}
 
+Table \ref{table:api} shows the API exposed by the NetMap measurements library
+to the game client code. The \texttt{measure} and \texttt{upload} methods
+perform the operations described above, while \texttt{powerSource} and
+\texttt{networkSource} help the game client decide when to upload the queued
+measurement data to the NetMap server. We expect that most game clients will
+upload data when the phone is using a charger and a WiFi network.
+
+\begin{table}[hbtp]
+\begin{tabular}{|p{6.25cm}|p{1.5cm}|}
+\hline
+\textbf{class NetMap}\\
+\hline
+\hline
+measure(\textbf{String} \textit{what}) : String \textit{digest}\\
+\hline
+upload() : \textbf{boolean} \textit{hasMoreData}\\
+\hline
+\hline
+powerSource() : \textbf{PowerSource}\\
+\hline
+networkSource() : \textbf{NetworkSource}\\
+\hline
+location() : \textbf{Location}\\
+\hline
+\hline
+initialize(\textbf{Context} \textit{androidContext})\\
+\hline
+configure(\textbf{String} \textit{userToken})\\
+\hline
+trackLocation(\textbf{Boolean} \textit{enabled})\\
+\hline
+\end{tabular}
+\caption{
+  The NetMap measurement library API
+}
+\label{table:api}
+\end{table}
+
+The performance measurements are tied to the user's location, so we ask game
+clients to call \texttt{trackLocation(\textbf{true})} before performing network
+measurements. In return, game code can call \texttt{location} to obtain the
+user's location, and game developers do not need to implement their own
+location tracking code. We expect that most game clients will call
+\texttt{trackLocation(\textbf{true})} when their UI becomes the foreground
+activity, and will call \texttt{trackLocation(\textbf{false})} when the game UI
+loses the player's focus. This approach supplies location-based games with the
+information they need for their UI, and ensures that measurements will have
+fresh location information. To be on the safe side, the NetMap analytics code
+discards measurements whose location timestamp is significantly older than the
+measurement timestamp.
 
 
+
+\subsection{The NetMap Server}
+
+
+\subsection{The Sample Game Code}
 
 Powerful moves (such as firing a very powerful
 weapon) would trigger the collection of more battery-intensive measurements.
