@@ -5,15 +5,15 @@ location data, network performance data including latency, bandwidth, and averag
 neighboring network infrastructure information such as neighboring network type and signal strength to
 neighboring towers/access points, and the DHCP information. All the data is stored in the JSON format,
 because it is extensible and JSON parsers are available in many (if not all) the popular programming
-languages.
+languages. Section~\ref{s:appendix} presents an example of the measurement. 
 
 
 {\bfseries Device-Specific Information.} \name{} collects device-specific information including the device ID
-(IMEI or ESN), the device type (GSM or CDMA), the software version. With the device ID, we can
+(IMEI or ESN), the device type (GSM or CDMA), the OS version. With the device ID, we can
 identify a device, track the device, and discard bad data that comes due to cheating. We can
 even provide personalized diaries of network usage which allow users to better understand their network
 using habits.
-Collecting OS version allows us to infer the effect of system and harware on the network performance. \name{} also
+Collecting OS version allows us to infer the effect of system and hardware on the network performance. \name{} also
 logs SIM card information, such as the phone number, the SIM card operator (AT\&T, T-Mobile, etc.),
 the radio type (EDGE, GPRS, HSDPA, etc.).
 This permits us to create the map of network quality for each phone carrier or type, and to track how the network quality
@@ -22,8 +22,8 @@ evolves over time.
 {\bfseries Location.} The system gathers the user's location information from the GPS or network location provider.
 For the GPS, in addition to the latitude and longitude, our system also collects information
 about the observed satellites, including the almanac, ephemeris, azimuth, elevation, and SNR.
-We plan to use the stallites information to detect users that cheat the game by faking their GPS locations.
-Because GPS is unavailable indoors, we also use the network location provider's locations.
+We plan to use the satellite information to detect users that cheat the game by faking their GPS locations.
+Because GPS is unavailable indoors, we also use the network location provider's estimated locations.
 %gather location estimation from the network provider
 %and verify its eligibility with the cell tower/AP information we collect.
 
@@ -35,7 +35,7 @@ includes the MAC address, SSID, IP address, frequency band, RSSI, link speed, et
 With the locations where users observed the cell tower/AP, we can approximate the location of
 each cell tower/AP. Many research projects~\cite{ctrack, vtrack-sensys09} have focused on using
 energy efficient sensors to provide accurate position estimation, but most of them suffer from
-low coverage problem due to lack of cell tower/AP observations. We belive we can greatly assist those projects
+low coverage problem due to lack of cell tower/AP observations. We believe we can greatly assist those projects
 with the crowd-sourced data that we have. However, neighboring GSM cell tower information isn't
 universally available across all phones. Some phone models limit the cell information to only
 the connected tower or do not make it available at all.
@@ -57,14 +57,14 @@ and incredibly tedious problems in measuring the network performance. First, in 
 measurements for both the uplink and downlink, one needs to consider the time
 synchronization problem between the device and the server. Second, to avoid variability introduced by the Internet,
 one needs to maintain servers in multiple places.
-NDT solves the time synchronization problem, and it maintains 81 servers in 27 coutries. This allows \name{}
-to provide accuracy network performance measurements across the world.
+NDT solves the time synchronization problem, and it maintains 81 servers in 27 countries. This allows \name{}
+to provide accurate network performance measurements across the world.
 
 \subsection{Battery/Network Awareness}
 \label{ss:awareness}
 There are two important aspects that designers need to take into account when implementing a mobile
 programming API. First, the API should lend itself to energy-efficient applications.
-Games using the API should avoid causing the users to incur data usage charges.
+Second, games using the API should avoid causing the users to incur data usage charges.
 
 \name{} addresses these two problems by incorporating the concept of battery and network aware.
 To be battery aware, \name{} monitors the battery level and status. Games using the API would get
