@@ -19,7 +19,9 @@ The NetMap platform includes an Android library that manages the
 straight-forward (but tedious) aspects of measuring network performance and
 uploading the data to the NetMap server. We envision that when a player takes
 an action in a game, the game code will call our library and ask it to collect
-a performance measurement. The measurement data is not uploaded to the NetMap
+a performance measurement. Powerful moves (such as firing a very powerful
+weapon) would trigger the collection of more battery-intensive measurements.
+The measurement data is not uploaded to the NetMap
 right away, so that the game can use all the player's (potentially limited)
 wireless Internet bandwidth, so that the data upload is not charged against
 the player's cellular Internet data quotas, and so that we do not burden the
@@ -27,6 +29,7 @@ player's mobile device battery. Instead, we queue up the data in a SQLite
 database on the player's device, and we wait until the device is connected to a
 WiFi network and its charger is plugged in. Under the right circumstances, all
 the data queued up in SQLite is uploaded to the measurement server.
+
 
 \begin{figure}[hbtp]
   \center{\includegraphics[width=85mm]{figures/dataflow.pdf}}
@@ -87,13 +90,61 @@ fresh location information. To be on the safe side, the NetMap analytics code
 discards measurements whose location timestamp is significantly older than the
 measurement timestamp.
 
-
+The API also includes asynchronous variants of \texttt{measure} and
+\texttt{upload}, an evented interface for changes to \texttt{powerSource},
+\texttt{networkSource} and \texttt{location}, as well as JSON-producing
+variants of the last 3 functions, for easy integration with JavaScript.
 
 \subsection{The NetMap Server}
 
+The network performance measurement data collected by the NetMap library is
+uploaded to the NetMap server, which stores the data for future analysis. We
+hope and expect that all the games using the NetMap platform will upload their
+measurements to our server. However, our library has an option of changing the
+upload server URL, to facilitate game development.
+
+The NetMap server tracks the game that uploaded each piece of measurement data,
+and can provide a leaderboard that shows which games have contributed the most
+to the network map. Game developers register the information in Table
+\ref{table:metrics-app} with the NetMap server and receive an application ID
+and secret HMAC key, which they use according to Figure \ref{fig:user-token}
+to issue tokens for their players. A user token uniquely identifies the game
+and the user that created the measurement, and a game cannot issue tokens on
+behalf of another game without knowing its secret key. This allows the NetMap
+server to discard a player's data, if the player is found cheating. Our
+platform can also discard an entire game's data, if there are signs that the
+game code is misbehaving.
+
+\begin{table}[hbtp]
+\begin{tabular}{|p{2.00cm}|p{5.50cm}|}
+\hline
+\textbf{Name} & user-friendly name for leaderboards \\
+\hline
+\textbf{Backend} & HTTP URL that receives callbacks \\
+\hline
+\textbf{Email} & developer contact information \\
+\hline
+\hline
+\textbf{App ID} & unique identifier for an application \\
+\hline
+\textbf{App Secret} & HMAC key \\
+\hline
+\end{tabular}
+\caption{
+  Per-application data maintained by the NetMap server. A game developer
+  registers her game's name, backend URL and e-mail with the NetMap server, and
+  receives an application ID and secret.
+}
+\label{table:metrics-app}
+\end{table}
 
 \subsection{The Sample Game Code}
 
-Powerful moves (such as firing a very powerful
-weapon) would trigger the collection of more battery-intensive measurements.
+\begin{figure}[hbtp]
+  \center{\includegraphics[width=85mm]{figures/gamedev.pdf}}
+  \caption{
+    The sample game server and client
+  }
+  \label{fig:sample}
+\end{figure}
 

@@ -1,0 +1,25 @@
+\subsection{Design Objectives}
+
+Our main objectives when designing NetMap are as follows:
+
+\textbf{Easy to integrate.} The popularity of the NetMap platform will be
+inversely proportional to the cost of integrating it in a game, so we focused
+our energy on reducing the surface area of the NetMap interface, and reducing
+the amount of specialized knowledge require to understand it.
+
+\textbf{Unobtrusive.} Collecting and processing the network measurement data
+should not adversely impact game performance. On mobile devices, the biggest
+constraints are battery life, the bandwidth and latency of the wireless
+Internet connection, and the data cap (quota) of the Internet connection.
+
+\textbf{Cheat-proof.} Any popular game has players who attempt to cheat, and
+the most common way of cheating in location-based games is supplying a fake
+location to the system. NetMap should detect measurements that are likely to
+contain fake location data, and should discard data supplied by cheating
+players.
+
+\textbf{Data-hungry.} To facilitate future analysis that we haven't thought
+about, NetMap should collect as much network-related data as is reasonably
+possible. During every measurement, we collect all the additional data that
+does not impose additional burdens on the user's battery life or network
+connection.
