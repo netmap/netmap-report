@@ -12,9 +12,9 @@ d = L - T = Distance from user to tower \newline
 s = Signal strength of current reading \newline
 stot = Sum of signal strengths from readings above threshold
 
-{\bfseries Algorithm 1- Channel Model Estimation}
+{\bfseries Algorithm 1: Channel Model Estimation.}
 We begin with the common model for wireless network channels: $s \propto \frac{k}{d^2}$
-where k is the channel condition parameter. However, we don’t know the channel 
+where k is the channel condition parameter. However, we don't know the channel 
 condition parameter and it is difficult to accurately estimate. We do know that readings 
 in similar locations should have similar channel condition parameters so we disregard 
 k (since it is roughly constant across readings in same location at similar time) and state:
@@ -25,7 +25,7 @@ To obtain cell tower location, we solve for T in each reading and use the locati
 $min(sd^2 – 1)$, which is derived from minimizing $d^2 = \frac{1}{s}$ (so $sd^2$ - 1 $\approx 0)$
 
 
-{\bfseries Algorithm 2- Weighted Average of User Locations}
+{\bfseries Algorithm 2: Weighted Average of User Locations.}
 We assume that users who connect or detect a cell tower with reasonable signal strength 
 are relatively close to the tower. Since all user locations, after eliminating outliers, will be 
 a small distance from the cell tower, and each will have a different orientation with respect 
