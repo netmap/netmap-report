@@ -5,7 +5,7 @@ BIBTEX=bibtex --min-crossrefs=1000
 
 REFS=$(wildcard src/*.bib)
 SRCS=$(wildcard src/*.tex src/figures/*.pdf)
-SPELLSRC=src/intro.tex
+SPELLSRC=src/measurements.tex
 all: pdf/$(REPORT).pdf
 
 tmp/:
