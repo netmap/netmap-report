@@ -169,16 +169,22 @@ connection. Silently discarding duplicates makes the upload request idempotent,
 so the process is resilient to network errors. In the presence of client-side
 bugs, the NetMap server salvages all the valid measurements.
 
-We have implemented the NetMap server on top of the node.js platform, using the
-express.js Web application framework. The server currently runs on one VM
-instance in MIT CSAIL's OpenStack cluster. However, we note that the current
+We have implemented the NetMap server in CoffeeScript, on top of the node.js
+platform, using the express.js Web application framework. The server currently
+runs on one VM instance in MIT CSAIL's OpenStack cluster.
+However, we note that the current
 design makes it easy to shard the server in the future, should the need arise.
 Each shard would carry a copy of the (relatively small) table of application
 IDs and secrets, and would store measurement data received by game clients,
 eliminating duplicates. A separate process would centralize the data from all
 the shards, and perform a second round of duplicate removal.
 
-\subsection{The Sample Game Code}
+\subsection{The Sample Game}
+
+Our source tree includes sample implementations for a game server and client,
+in the hope that game developers can use the sample code to accelerate their
+development process. Figure \ref{fig:sample} illustrates the components of the
+sample game.
 
 \begin{figure}[hbtp]
   \center{\includegraphics[width=85mm]{figures/gamedev.pdf}}
@@ -188,3 +194,57 @@ the shards, and perform a second round of duplicate removal.
   \label{fig:sample}
 \end{figure}
 
+We imagine that most location-based games will build the in-game map based on
+the real-world map, so we provide a pipeline for producing map information that
+consists entirely of data and software available under licenses that allow
+redistribution. We specifically steered away from mapping platforms with
+restrictive licenses, such as Google Maps, in order to avoid having the NetMap
+measurement data be considered a derivative of someone else's intellectual
+property, which would restrict our ability to make this data available for
+research purposes. Our pipeline imports OpenStreetMap data in a PostGIS
+database, uses the mapnik library to render map tiles, and uses RubyMapnik
+together with Ruby on Rails to serve the map tiles from a HTTP server. The map
+tiles in Figures \ref{fig:bw} and \ref{fig:rtt} are rendered using the pipeline
+described above.
+
+The sample game server is written in Ruby on Rails, and shows the recommended
+method of integrating with the NetMap server. The codebase also includes
+straightforward implementations of signup and login pages, player profiles,
+a game manual, and integration with the PostGIS for efficient geographical
+queries. The game server is packaged together with a development version of the
+NetMap server in a VirtualBox VM image, so game developers can start hacking
+right away. The VM setup process is fully documented in the form of shell
+scripts, which can be used by game developers to set up their own customized
+development VMs, and as an inspiration for the production deployment of their
+game servers. We used our scripts to set up a production server in a VM
+instance on CSAIL's OpenStack infrastructure, and we expect the scripts to work
+just as well on Amazon EC2.
+
+The sample game's UI is written completely in HTML, SCSS (a superset of CSS)
+and CoffeeScript (a better syntax for JavaScript). We use the Middleman ruby
+gem to compile the UI into a static Web site that uses XMLHttpRequest to
+interact with the game server. This setup lets game developers iterate on the
+game design and logic using Google Chrome and its Developer tools, which yields
+a significantly better iteration speed than the standard Android
+build-test-deploy process.
+
+The game client contains sample code for connecting to the NetMap measurement
+library and ChromeView, our own packaging of the Google Chrome code, with an
+API that matches Android's WebKit API. We built ChromeView to ensure a
+consistent experience across different Android devices, and so that we don't
+have to track bugs that depend on variations in the WebView implementations in
+phone firmwares. The API parity with WebView is intentional, as it allows game
+developers to remove ChromeView from their games, and still use the rest of our
+code with a standard WebView. ChromeView generated some outside interest, and
+ended up being a significantly bigger time commitment than initially expected.
+
+The sample game client includes a thin layer of JavaScript bindings that expose
+the NetMap measurement library to the JavaScript game logic running inside
+ChromeView. The sample game server includes a pure-JavaScript emulation of the
+JavaScript bindings that is used when accessing the game from the Google Chrome
+browser, during game development. The emulated bindings use standard HTML5
+features, such as the XMLHttpRequest, the W3C Geolocation API and IndexedDB, to
+implement the NetMap library methods such as \texttt{measure}, \texttt{upload}
+and \texttt{location}. Our emulation does not yet collect network performance
+measurements, but we are closely watching Google's efforts of implementing the
+NDT library in JavaScript.
