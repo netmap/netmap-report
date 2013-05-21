@@ -138,6 +138,46 @@ game code is misbehaving.
 \label{table:metrics-app}
 \end{table}
 
+In the user token generation process illustrated by Figure
+\ref{fig:user-token}, each game is responsible for managing its own space of
+user IDs, and the NetMap servers treat user IDs as opaque alphanumeric strings.
+Our process has the advantage that game servers can issue user tokens that the
+NetMap servers can validate, without the need for any synchronization. The main
+disadvantage of this design is that user IDs are exposed to game clients, so
+we expect that security-conscious game clients will either generate
+pseudo-random user IDs, or will encrypt the user IDs exposed to the NetMap API.
+
+\begin{figure}[hbtp]
+  \center{\includegraphics[width=85mm]{figures/user-token.pdf}}
+  \caption{
+    The algorithm for generating a user token
+  }
+  \label{fig:user-token}
+\end{figure}
+
+The NetMap measurement library embedded in game clients uploads the measurement
+data to the NetMap server by sending an HTTP POST request to
+\texttt{/readings}. The request body has the JSON data for the measurements,
+separated by newlines. The NetMap server parses the JSON on each line,
+validates the user tokens in the valid lines, and writes the measurements with
+valid tokesn to the database, silently discarding duplicates. The client-side
+code runs in a loop that attempts to upload a set of measurements queued in the
+database, and removes them from the database if it receives a successful
+response (HTTP status code 200 or 400) from the server. We batch multiple
+measurements in an HTTP request to amortize the costs of setting up a SSL
+connection. Silently discarding duplicates makes the upload request idempotent,
+so the process is resilient to network errors. In the presence of client-side
+bugs, the NetMap server salvages all the valid measurements.
+
+We have implemented the NetMap server on top of the node.js platform, using the
+express.js Web application framework. The server currently runs on one VM
+instance in MIT CSAIL's OpenStack cluster. However, we note that the current
+design makes it easy to shard the server in the future, should the need arise.
+Each shard would carry a copy of the (relatively small) table of application
+IDs and secrets, and would store measurement data received by game clients,
+eliminating duplicates. A separate process would centralize the data from all
+the shards, and perform a second round of duplicate removal.
+
 \subsection{The Sample Game Code}
 
 \begin{figure}[hbtp]

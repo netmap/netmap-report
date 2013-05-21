@@ -3,20 +3,26 @@
 Our main objectives when designing NetMap are as follows:
 
 \textbf{Easy to integrate.} The popularity of the NetMap platform will be
-inversely proportional to the cost of integrating it in a game, so we focused
-our energy on reducing the surface area of the NetMap interface, and reducing
-the amount of specialized knowledge require to understand it.
+inversely proportional to the cost of integrating it in a game, so we focus
+our energy on reducing the surface area of the NetMap interface, and on
+reducing the amount of specialized knowledge require to understand it.
 
 \textbf{Unobtrusive.} Collecting and processing the network measurement data
 should not adversely impact game performance. On mobile devices, the biggest
 constraints are battery life, the bandwidth and latency of the wireless
 Internet connection, and the data cap (quota) of the Internet connection.
 
+\textbf{Resilient to failures.} Network and server failures are inevitable for
+any project that runs over a non-trivial amount of time. NetMap server failures
+should not negatively impact the players' experiences and, whenver possible,
+should not result in measurement data loss. Game server failures should be
+recoverable. To achieve this goal, we minimize the amount of shared state and
+prefer idempotent API operations.
+
 \textbf{Cheat-proof.} Any popular game has players who attempt to cheat, and
 the most common way of cheating in location-based games is supplying a fake
-location to the system. NetMap should detect measurements that are likely to
-contain fake location data, and should discard data supplied by cheating
-players.
+location to the system. NetMap should be resilient to malicious players, as
+well as to malicious game developers.
 
 \textbf{Data-hungry.} To facilitate future analysis that we haven't thought
 about, NetMap should collect as much network-related data as is reasonably
